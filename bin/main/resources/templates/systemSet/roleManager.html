@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resource/common/layui/css/layui.css" media="all"/>
+</head>
+</head>
+<body>
+
+<div class="pcoded-wrapper">
+    <div class="pcoded-content">
+        <!-- Page-header start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <ul class="breadcrumb-title">
+                            <li class="breadcrumb-item">
+                                <a href="/diplomaProjectAdmin"> <i class="fa fa-home"></i> </a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">系统设置</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">角色管理</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pcoded-inner-content">
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- Page body start -->
+                    <div class="page-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <table id="roleTables"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Badges card end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page body end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script type="text/html" id="toolbar">-->
+<!--<button type="button" class="btn btn-success btn-sm" lay-event="add">-->
+<!--<i class="ti-plus"></i> 新增-->
+<!--</button>-->
+<!--</script>-->
+<script type="text/html" id="operate">
+    {{#  if(d.roleId!='1'){ }}
+
+    <button type="button" class="btn btn-warning btn-sm" lay-event="edit">
+        <i class="ti-marker-alt"></i> 编辑
+    </button>
+    <button type="button" class="btn btn-danger btn-sm" lay-event="del">
+        <i class="ti-trash"></i> 删除
+    </button>
+    {{#  } else { }}
+    <button type=" button" class="btn btn-sm btn-outline-light smbtn" lay-event="add">
+        无法操作
+    </button>
+    {{# } }}
+</script>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['table', 'layer', 'laydate', 'form'], function () {
+        var table = layui.table,
+            $ = layui.$,
+            layer = layui.layer,
+            form = layui.form;
+        var tableIns = table.render({
+            elem: '#roleTables'
+            , skin: 'line'
+            , size: 'lg'
+            , toolbar: '#toolbar'
+            , url: '/role/role.do' //数据接口
+            , method: 'get'
+            , page: {theme: '#448aff'} //开启分页
+            , limit: 9
+            , cols: [
+                [ //表头
+                    {field: 'role', title: '角色名'}
+                    , {field: 'description', title: '权限描述'}
+                    , {field: 'createName', title: '创建人'}
+                    , {title: '操作', toolbar: '#operate'}
+                ]
+            ]
+        });
+        table.on('toolbar', function (obj) {
+            var data = obj.data;
+            var event = obj.event;
+            if (event === 'add') {
+                layer.open({
+                    content: "/role/addRole.do",
+                    title: "创建角色",
+                    shade: [0.8, '#393D49'],
+                    shadeClose: false, //点击遮罩关闭层
+                    area: ['45%', '90%'],
+                    type: 2,
+                    maxmin: true,
+                    shadeClose: true
+                });
+            }
+        });
+        //监听工具条
+        table.on('tool', function (obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'del') {
+                //删除
+                delRole(data.id);
+            } else if (obj.event === "edit") {
+                //修改
+                layer.open({
+                    type: 2,
+                    shadeClose: false, //点击遮罩关闭层
+                    title: "编辑角色",
+                    shade: [0.8, '#393D49'],
+                    shadeClose: false, //点击遮罩关闭层
+                    area: ['45%', '90%'],
+                    content: "/role/editRole.do?id=" + data.id
+                });
+            }
+        });
+
+        //删除角色函数
+        function delRole(id) {
+            layer.confirm('是否删除?', function (index) {
+                $.ajax({
+                    url: "/role/role.do",
+                    type: "post",
+                    data: {_method: "DELETE", "id": id},
+                    dataType: "json",
+                    success: function (result) {
+                        if (!result.status) {
+                            layer.msg(result.msg, {time: 2000});
+                            return false;
+                        }
+                        layer.msg("删除成功!", {time: 1000});
+                        layui.table.reload('roleTables');
+                    }
+                });
+                layer.close(index);
+            })
+        }
+    });
+
+</script>
+</body>
+</html>

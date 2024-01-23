@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/resource/common/layui/css/layui.css" media="all"/>
+</head>
+<body>
+<div class="pcoded-wrapper">
+    <div class="pcoded-content">
+        <!-- Page-header start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <ul class="breadcrumb-title">
+                            <li class="breadcrumb-item">
+                                <a href="/diplomaProjectAdmin"> <i class="fa fa-home"></i> </a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">系统设置</a>
+                            </li>
+                            <li class="breadcrumb-item"><a href="#!">系统日志</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pcoded-inner-content">
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- Page body start -->
+                    <div class="page-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="card-header-left">
+                                            <form class="layui-form">
+                                                <div class="layui-form-item">
+                                                    <div class="layui-inline">
+                                                        <label class="layui-form-label">用户名</label>
+                                                        <div class="layui-input-inline">
+                                                            <input placeholder="用户名查询" autocomplete="off"
+                                                                   name="userName"
+                                                                   class="layui-input">
+                                                        </div>
+                                                        <label class="layui-form-label">日期</label>
+                                                        <div class="layui-input-inline">
+                                                            <input name="time" id="time" autocomplete="off"
+                                                                   placeholder="操作时间查询"
+                                                                   class=" layui-input ">
+                                                        </div>
+                                                        <button lay-submit="" lay-filter="search" type="button"
+                                                                style="padding: 7px 13px;vertical-align: initial;"
+                                                                class="btn btn-primary">
+                                                            <i class="ti-search"></i> 搜索
+                                                        </button>
+                                                        <button onclick="location.reload()" type="button"
+                                                                style="padding: 7px 13px;vertical-align: initial;"
+                                                                class="btn btn-info">
+                                                            <i class="ti-reload"></i> 刷新
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="card-block">
+                                        <div class="row">
+                                            <table id="logTables"></table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Badges card end -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page body end -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/html" id="toolbar">
+    <button type="button" class="btn btn-danger btn-sm" lay-event="delAll">
+        <i class="ti-trash"></i> 批量删除
+    </button>
+</script>
+<script type="text/html" id="operate">
+    <button type="button" class="btn btn-danger btn-sm" lay-event="del">
+        <i class="ti-trash"></i> 删除
+    </button>
+</script>
+
+</div>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script src="/resource/js/jquery.js"></script>
+<script src="/resource/js/jquery-ui.js"></script>
+<script type="text/javascript">
+    layui.use(['table', 'layer', 'laydate', 'form'], function () {
+        var table = layui.table,
+            $ = layui.$,
+            layer = layui.layer,
+            laydate = layui.laydate,
+            form = layui.form;
+        laydate.render({
+            elem: '#time'
+            , theme: '#393D49'
+            , range: true
+        });
+        var tableIns = table.render({
+            elem: '#logTables'
+            , skin: 'line'
+            , size: 'lg'
+            , toolbar: '#toolbar'
+            , url: '/log/log.do' //数据接口
+            , method: 'get'
+            , page: {theme: '#448aff'} //开启分页
+            , limits: [10, 15, 30]
+            , limit: 15
+            , cols: [
+                [ //表头
+                    {'type': 'checkbox', 'fixed': 'left'}
+                    , {field: 'time', title: '记录时间'}
+                    , {field: 'operation', title: '记录内容'}
+                    , {field: 'userName', title: '操作用户'}
+                    , {title: '操作', toolbar: '#operate', 'fixed': 'right'}
+                ]
+            ]
+        });
+        //搜索点击事件
+        form.on('submit(search)', function (form) {
+            table.reload('logTables', {
+                where: form.field
+            });
+            return false;
+        });
+        $('.del').on('click', function () {
+            var datas = table.checkStatus("tableId").data;
+            console.log(datas)
+            if (datas.length == 0) {
+                layer.alert("请选择数据后再进行操作！");
+            } else {
+                var ids = new Array();
+                for (d in datas) {
+                    ids.push(datas[d].id);
+                }
+                dellog(ids.toString());
+            }
+        });
+        table.on('toolbar', function (obj) {
+            var data = obj.data;
+            var event = obj.event;
+            var datas = table.checkStatus("logTables").data;
+            if (event === 'delAll') {
+                if (datas.length == 0) {
+                    layer.alert("请选择数据后再进行操作！");
+                } else {
+                    var ids = new Array();
+                    for (d in datas) {
+                        ids.push(datas[d].id);
+                    }
+                    dellog(ids.toString());
+                }
+            }
+        });
+        //监听工具条
+        table.on('tool', function (obj) {
+            var data = obj.data;
+            console.log(data);
+            if (obj.event === 'del') {
+                //删除
+                dellog(data.id);
+            }
+        });
+
+        //删除函数
+        function dellog(id) {
+            layer.confirm('是否删除?', function (index) {
+                $.ajax({
+                    url: "/log/log.do",
+                    type: "post",
+                    data: {_method: "DELETE", "ids": id},
+                    dataType: "json",
+                    success: function (result) {
+                        if (!result.status) {
+                            layer.msg(result.msg, {time: 2000});
+                            return false;
+                        }
+                        layer.msg("删除成功!", {time: 1000});
+                        layui.table.reload('logTables');
+                    }
+                });
+                layer.close(index);
+            })
+        }
+    });
+
+</script>
+
+</body>
+</html>

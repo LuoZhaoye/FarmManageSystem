@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Site Title-->
+    <title th:text="${wbeParameter.name}"></title>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <script src="/resource/js/3ts2ksMwXvKRuG480KNifJ2_JNM.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resource/css/css.css">
+    <link rel="stylesheet" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" href="/resource/css/style(1).css">
+</head>
+<body>
+<div class="text-left page">
+    <header th:replace="proscenium/public :: head"></header>
+    <div class="swiper-container swiper-slider bg-rpimary" data-loop="false" data-autoplay="false"
+         data-simulate-touch="false">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" data-slide-bg="/resource/img/big-01.jpg">
+                <div class="swiper-slide-caption">
+                    <div class="container container-wide text-center">
+                        <div class="row justify-content-between row-15 align-items-center">
+
+                            <div class="col-sm-12">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <section class="section section-lg bg-white text-center">
+        <div class="container container-wide">
+            <h2>资料</h2>
+            <input type="hidden" id="ifRes" th:value="${b}"></input>
+            <div class="row row-xl row-30">
+                <div class="col-lg-6 col-xxl-3 wow fadeInUp" data-wow-delay="0.1s" th:each="article:${articleList}">
+                    <div class="project">
+                        <img th:src="${article.img}" alt="" width="420" height="320">
+                        <div class="project-inner">
+                            <h4 class="project-title">
+                                <a th:href="${'/articleDetail?id='+article.id}" th:text="${article.title}"></a></h4>
+                            <div class="divider-small"></div>
+                            <p th:text="${article.info}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section section-lg bg-white text-center">
+        <div class="container container-wide">
+            <h2>学习方法</h2>
+            <div class="row text-left row-30">
+                <div class="col-md-6 col-lg-4 wow fadeInLeft" data-wow-delay="0.15s" th:each="notice:${noticeList}">
+                    <div class="quote-big">
+                        <div class="quote-big-inner">
+                            <a th:href="${'/noticeDetail?id='+notice.id}">
+                                <p class="quote-big-text" th:text="${notice.title}"></p>
+                                <div class="quote-info">
+                                    <div class="unit unit-spacing-xs unit-xxs-horizontal unit-xxs-middle">
+                                        <div class="unit-body">
+                                            <p class="quote-info-cite"
+                                               th:text="${#strings.substring(notice.time,0,19)}"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-group"><a class="button button-primary" href="/noticePage">查看更多</a></div>
+        </div>
+    </section>
+    <section class="section section-lg bg-gray-1">
+        <div class="container container-wide text-center">
+            <h2>问答</h2>
+            <div class="row row-xl row-40 justify-content-center text-left">
+                <div class="col-lg-10 col-xl-6 wow fadeInLeft" data-wow-delay="0.25s">
+                    <article class="blog-corporative" th:each="forum,str:${forumList}" th:if="${str.count lt 2}">
+                        <div class="blog-corporative-img">
+                            <img th:src="${forum.img}" alt="" width="870" height="500">
+                        </div>
+                        <div class="blog-corporative-body">
+                            <div class="blog-corporative-list">
+                                <ul class="inline-list-md">
+                                    <li>
+                                        <div class="unit unit-xxs unit-xxs-horizontal unit-spacing-xxs">
+                                            <div class="unit-left"><span class="icon mdi mdi-calendar-clock"></span>
+                                            </div>
+                                            <div class="unit-body">
+                                                <a th:href="${'forumDetail?id='+forum.id}"
+                                                   th:text="${#strings.substring(forum.time,0,19)}"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="unit unit-xxs unit-xxs-horizontal unit-spacing-xxs">
+                                            <div class="unit-left"><span class="icon mdi mdi-account"></span></div>
+                                            <div class="unit-body"><a th:text="${forum.userName}"></a></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="blog-corporative-footer">
+                                <div class="blog-corporative-title">
+                                    <h2><a th:href="${'forumDetail?id='+forum.id}" th:text="${forum.title}"></a></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-lg-10 col-xl-6 wow fadeInRight" data-wow-delay="0.25s">
+                    <div class="row row-40 justify-content-center justify-content-md-start">
+                        <div class="col-sm-10 col-md-6" th:each="forum,str:${forumList}" th:if="${str.count gt 1}">
+                            <div class="blog-modern blog-modern-gel">
+                                <div class="blog-default-img">
+                                    <a th:href="${'forumDetail?id='+forum.id}">
+                                        <img th:src="${forum.img}" alt="" width="420" height="270"></a>
+                                    <ul class="blog-default-meta"></ul>
+                                </div>
+                                <div class="blog-default-body">
+                                    <h4 class="blog-default-title">
+                                        <a th:href="${'forumDetail?id='+forum.id}" th:text="${forum.title}"></a>
+                                    </h4>
+                                    <div class="blog-modern-meta">
+                                        <span class="icon mdi mdi-calendar-clock icon-secondary icon-md"></span><span
+                                            th:text="${#strings.substring(forum.time,0,19)}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="_iad" style="width: 300px;height: 200px;position: fixed;right: 2px;bottom: 2px;
+				display: none;border-radius: 4px;box-shadow: none;z-index: 999;padding: 0px;font-size: 12px;">
+        <div style="position: absolute;right: 0px;top: 0px;margin-right: 4px;">
+            <a id="_ic" style="width: 20px; height: 20px; text-align: center; line-height: 20px; display:
+						inline-block; text-decoration: none; font-family: Verdana,Geneva,sans-serif; font-weight: bold;
+						font-size: 15px; cursor: pointer; color: rgb(0, 0, 0); margin: 2px 0px 0px 2px;"
+               class="_ic" onclick="_ic_close(this);">Χ
+            </a>
+        </div>
+        <script>function _ic_close(o){ document.getElementById('_iad').style.display = "none"; } </script>
+<!--        <iframe scrolling="no" src="http://www.what21.com" allowtransparency="true" style="width: 300px;height: 250px;border-radius: 4px;"-->
+<!--                frameborder="no"></iframe>-->
+        <div  style="width: 300px;height: 200px;border-radius: 4px;background-color: aliceblue;"><br>距离您上次复习已经超过7天了，该抓紧时间再次复习了</div>
+    </div>
+
+</div>
+<div class="snackbars" id="form-output-global"></div>
+</body>
+<!-- Javascript-->
+<script src="/resource/js/core.min.js"></script>
+<script src="/resource/js/script(1).js"></script>
+<script src="../../static/resource/js/jquery.min.js"></script>
+<!--LIVEDEMO_00 -->
+
+<script>
+
+    window.onload = function(){
+        $("#ifRes").val();
+        var audio = document.getElementById('ifRes').value;
+        if(audio == "true" || audio == true){
+            document.getElementById('_iad').style.display = "black";
+            $("#_iad").show();
+        }
+    }
+
+
+</script>
+<script type="text/javascript">
+    $(function () {
+        fn();
+        // alert("初始化函数");
+    });
+    function fn() {
+        // alert("开始调用函数");  //待调用的函数
+    }
+</script>
+
+
+
+</html>

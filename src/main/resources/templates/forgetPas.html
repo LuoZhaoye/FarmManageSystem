@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:text="${wbeParameter.name}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.bootcss.com/webfont/1.6.26/webfontloader.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/resource/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/resource/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/resource/img/favicon-16x16.png">
+    <link rel="stylesheet" href="/resource/css/vendor/bootstrap.min.css">
+    <link rel="stylesheet" href="/resource/css/vendor/elisyam-1.2.css">
+</head>
+<body class="bg-fixed-02">
+<!-- Begin Preloader -->
+<div id="preloader">
+    <div class="canvas">
+        <img src="/resource/img/logo.png" alt="logo" class="loader-logo">
+        <div class="spinner"></div>
+    </div>
+</div>
+<!-- End Preloader -->
+<!-- Begin Container -->
+<div class="container-fluid h-100 overflow-y">
+    <div class="row flex-row h-100">
+        <div class="col-12 my-auto">
+            <div class="password-form mx-auto layui-form">
+                <div class="logo-centered">
+                    <a>
+                        <img src="/resource/img/logo.png" alt="logo">
+                    </a>
+                </div>
+                <h3>忘记密码</h3>
+                <div>
+                    <div class="group material-input">
+                        <input type="text" name="userName" lay-verify="required|userName"
+                               lay-vertype="tips" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>账号</label>
+                    </div>
+                    <div class="group material-input">
+                        <input type="email" name="toEmail" id="toEmail"
+                               lay-verify="required|email"
+                               lay-vertype="tips" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>邮箱</label>
+                    </div>
+                </div>
+                <div class="button text-center">
+                    <button class="btn btn-lg btn-gradient-01" lay-submit="" lay-filter="Submit">
+                        确认发送
+                    </button>
+                </div>
+                <div class="back">
+                    <a href="/">登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/resource/js/vendors/jquery.min.js"></script>
+<script src="/resource/js/vendors/core.min.js"></script>
+<script src="/resource/js/vendors/app.min.js"></script>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['table', 'layer', 'laydate', 'upload', 'form'], function () {
+        var table = layui.table,
+            $ = layui.$,
+            layer = layui.layer,
+            upload = layui.upload,
+            form = layui.form;
+        form.on('submit(Submit)', function (data) {
+            $.ajax({
+                url: '/retrievePass',
+                type: 'post',
+                data: data.field,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    if (!result.status) {
+                        layer.msg(result.msg, {time: 2000});
+                        return false;
+                    } else {
+                        layer.msg("密码已发送至邮箱!", {time: 2000});
+                        $('#toEmail').val("")
+                        $('#userName').val("")
+                    }
+                }
+
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

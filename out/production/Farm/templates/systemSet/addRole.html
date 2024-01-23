@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="/resource/common/layui/css/layui.css" media="all"/>
+</head>
+<style>
+    .layui-icon {
+        color: #5B93D3;
+    }
+
+    .auth-status span {
+        color: #5B93D3;
+    }
+</style>
+<body>
+<div class="layui-form" style="padding: 40px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色:</label>
+        <div class="layui-input-block">
+            <input type="text" name="role" lay-verify="required" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择权限</label>
+        <div class="layui-input-block">
+            <div id="LAY-auth-tree-index"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限描述:</label>
+        <div class="layui-input-block">
+            <textarea name="description" autocomplete="off"
+                      class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item" style="position: fixed;bottom: 0px;right: 10px;">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal " lay-submit="" lay-filter="Submit">保存内容</button>
+            <button type="" class="layui-btn layui-btn-primary  close">取消</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.config({
+        base: '/resource/common/layui/',
+    }).extend({
+        authtree: 'authtree',
+    });
+    layui.use(['table', 'layer', 'laydate', 'form', 'authtree'], function () {
+        var table = layui.table,
+            $ = layui.$,
+            layer = layui.layer,
+            authtree = layui.authtree,
+            form = layui.form;
+        var sysList = [[${sysList}]];
+        console.log(sysList)
+        $('.close').on('click', function () {
+            parent.layer.close(parent.layer.getFrameIndex(window.name));
+        })
+        //初始化权限树
+        var tree = authtree.render('#LAY-auth-tree-index', sysList, {
+            inputname: 'authids[]',
+            layfilter: 'lay-check-auth',
+            openall: true,
+            autowidth: true,
+        });
+
+        form.on('submit(Submit)', function (data) {
+            var checkedData = authtree.getChecked('#LAY-auth-tree-index');
+            data.field.permissionsIds = checkedData.toString();
+            $.ajax({
+                url: '/role/role.do',
+                type: 'post',
+                data: data.field,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    if (result.status) {
+                        parent.layer.msg("创建成功!", {time: 1000});
+                        parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        parent.layui.table.reload('roleTables', {});
+                    } else {
+                        layer.msg(result.msg);
+                    }
+                }
+
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

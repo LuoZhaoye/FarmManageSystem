@@ -1,0 +1,79 @@
+﻿.my-layout-body {
+    overflow: hidden;
+}
+
+.my-admin .my-header {
+    background-color: #2b333e;
+    height: 5px;
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, .05);
+}
+
+.my-header {
+    z-index: 1000;
+}
+
+.my-admin .my-side {
+    position: absolute;
+    top: 60px;
+    width: 230px;
+
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+.my-admin .my-body {
+    left: 235px;
+    top: 56px;
+    position: fixed;
+    bottom: 0px;
+    right: 0;
+    z-index: 998;
+    width: auto;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+}
+
+.my-admin .my-header .sl-header-left {
+    height: 60px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    position: absolute !important;
+    left: 220px;
+    top: 0;
+}
+
+.my-admin .my-header .sl-header-right {
+    height: 60px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    position: absolute !important;
+    right: 0;
+    top: 0;
+}
+
+.my-iframe {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 0px) !important;
+    left: 0;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    border: none;
+}
+
+.J_iframe {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 0px) !important;
+    left: 0;
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    border: none;
+}
+

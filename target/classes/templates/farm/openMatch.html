@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="/resource/common/layui/css/layui.css" media="all"/>
+</head>
+<body>
+<div class="layui-form" style="padding: 40px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品名称:</label>
+        <div class="layui-input-block">
+            <input type="text" name="workName" th:value="${word.workName}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品类型:</label>
+        <div class="layui-input-block">
+            <input type="hidden" id="farmId3" name="farmId3" th:value="${word.worksTypeId}" >
+            <select id="worksTypeId" name="worksTypeId" lay-verify="required">
+                <option value="农场">农场</option>
+                <option value="产品">产品</option>
+                <option value="其它">其它</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品构思:</label>
+        <div class="layui-input-block">
+            <input type="text" name="idea" th:value="${word.idea}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品类型:</label>
+        <input type="text" id="farmId2" name="farmId2" th:value="${word.status}" >
+        <div class="layui-input-block">
+            <select id="status" name="status" lay-verify="required">
+                <option value="0" th:selected="${word.status eq '0'}">未完成</option>
+                <option value="1" th:selected="${word.status eq '1'}">已完成</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品图片:</label>
+        <div class="layui-input-block">
+            <div class="layui-upload-drag" id="upImg">
+                <i class="layui-icon">&#xe650;</i>
+                <p>建议尺寸168*168，支持jpg、png、gif</p>
+                <div class="" id="image2">
+                    <hr>
+                    <img th:src="'/resource'+${word.image}" alt="上传成功后渲染" style="max-width: 196px">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" style="position: fixed;bottom: 0px;right: 10px">
+        <div class="layui-input-block">
+            <input id="image" name="image" hidden=""/>
+            <input id="id" name="id" th:value="${word.id}" hidden=""/>
+            <button class="layui-btn layui-btn-normal " lay-submit="" lay-filter="Submit">保存内容</button>
+            <button type="" class="layui-btn layui-btn-primary  close">取消</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script type="text/javascript">
+
+    layui.use(['table', 'layer', 'layedit', 'upload', 'form'], function () {
+        var table = layui.table,
+            $ = layui.$,
+            layer = layui.layer,
+            layedit = layui.layedit,
+            upload = layui.upload,
+            form = layui.form;
+
+        // const value3 = $("#farmId3").val();
+        // $('#worksTypeId').find("option[value="+value3+"]").attr("selected",true);
+        //
+        // const value2 = $("#farmId2").val();
+        // $('#status').find("option[value="+value2+"]").attr("selected",true);
+
+        //拖拽上传
+        upload.render({
+            elem: '#upImg'
+            , url: '/upload.do'
+            , done: function (res) {
+                layer.msg('上传成功');
+                console.log(res)
+                layui.$('#image2').removeClass('layui-hide').find('img').attr('src', res.obje);
+                $("#image").val(res.obje);
+            }
+        });
+        $('.close').on('click', function () {
+            parent.layer.close(parent.layer.getFrameIndex(window.name));
+        })
+        form.on('submit(Submit)', function (data) {
+            console.log("编辑测试数据：", data)
+            $.ajax({
+                url: '/works/editWork.do',
+                type: 'post',
+                data: data.field,
+                dataType: 'json',
+                async: false,
+                success: function (result) {
+                    if (!result.status) {
+                        parent.layer.msg(result.msg, {time: 2000});
+                        return false;
+                    } else {
+                        parent.layer.msg("新增成功!", {time: 1000});
+                        parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        parent.location.reload();
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

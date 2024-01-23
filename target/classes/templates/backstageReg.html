@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${wbeParameter.name}"></title>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="icon" href="/resource/img/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resource/pages/waves/css/waves.min.css" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/icofont/css/icofont.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/style.css">
+</head>
+
+<body themebg-pattern="theme1" style="background: url('/resource/img/bandee.jpeg')">
+<section class="login-block">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="md-float-material form-material">
+                    <div class="text-center">
+                        <img src="/resource/img/logo.png" alt="logo.png">
+                    </div>
+                    <div class="auth-box card layui-form">
+                        <div class="card-block">
+                            <div class="row m-b-20">
+                                <div class="col-md-12">
+                                    <h3 class="text-center txt-primary">注册</h3>
+                                </div>
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="text" name="userName" lay-verify="required|userName"
+                                       lay-vertype="tips" class="form-control" required="" autocomplete="off">
+                                <span class="form-bar"></span>
+                                <label class="float-label">账号</label>
+                            </div>
+                            <div class="form-group form-primary">
+                                <input type="text" name="realName" lay-verify="required"
+                                       lay-vertype="tips" class="form-control" required="" autocomplete="off">
+                                <span class="form-bar"></span>
+                                <label class="float-label">姓名</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group form-primary">
+                                        <input type="password" name="plainPassword" lay-verify="required|pass"
+                                               lay-vertype="tips" class="form-control" required="" autocomplete="off">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">密码</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group form-primary">
+                                        <input type="password" name="affirmPassword" lay-verify="required|pass"
+                                               lay-vertype="tips" class="form-control" required="" autocomplete="off">
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">确认密码</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row m-t-30">
+                                <div class="col-md-12">
+                                    <button type="button" lay-submit="" lay-filter="demo1"
+                                            class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">
+                                        注册
+                                    </button>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <p class="text-inverse text-left m-b-0"><a href="/">去登陆</a></p>
+                                </div>
+                                <div class="col-md-2">
+                                    <img src="/resource/img/Logo-small-bottom.png" alt="small-logo.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script>
+    layui.use(['carousel', 'form', 'layer'], function () {
+        var carousel = layui.carousel
+            , layer = layui.layer
+            , $ = layui.$
+            , form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            userName: function (value) {
+                if (value.length < 5) {
+                    return '账号至少得5个字符';
+                }
+            }
+            , pass: [/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格']
+        });
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            if (data.field.affirmPassword != data.field.plainPassword) {
+                layer.msg('两次密码输入不一致', {icon: 5});
+                return false;
+            }
+            data.field.status = "1"
+            $.ajax({
+                url: '/user/userRegister.do',
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (result) {
+                    console.log(result)
+                    if (result.status) {
+                        alert("注册成功！")
+                        location.href = "/loginShiro";
+                    } else {
+                        layer.msg(result.msg, {time: 2000});
+                    }
+                }
+
+            });
+        });
+    });
+
+</script>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body id="list-cont">
+<header th:fragment="head" class="page-header">
+    <!-- RD Navbar-->
+    <div class="rd-navbar-wrap">
+        <nav class="rd-navbar rd-navbar-default rd-navbar-transparent" data-layout="rd-navbar-fixed"
+             data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fullwidth"
+             data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static"
+             data-lg-device-layout="rd-navbar-static" data-md-stick-up-offset="80px" data-lg-stick-up-offset="46px"
+             data-stick-up="true" data-sm-stick-up="true" data-md-stick-up="true" data-lg-stick-up="true">
+            <div class="rd-navbar-inner">
+                <!-- RD Navbar Panel-->
+                <div class="rd-navbar-panel">
+                    <!-- RD Navbar Toggle-->
+                    <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span>
+                    </button>
+                    <div class="rd-navbar-brand">
+<!--                        <a class="brand-name" href="/diplomaProject">-->
+<!--                            <img th:src="${wbeParameter.logo}" width="232" height="44" alt="">-->
+<!--                        </a>-->
+                    </div>
+                </div>
+                <div class="rd-navbar-aside-right">
+                    <div class="rd-navbar-nav-wrap">
+                        <ul class="rd-navbar-nav">
+                            <li><a style="color: #000000;" href="/contestNotice">公告</a></li>
+                            <li><a style="color: #000000;" href="/fFarmPage">农场</a></li>
+                            <li><a style="color: #000000;" href="/fProductPage">产品</a></li>
+                            <li><a style="color: #000000;" href="/fMatchPage">比赛</a></li>
+                            <li><a style="color: #000000;" href="/fMyMatchPage">我的作品</a></li>
+<!--                            <li><a href="/diplomaProject">首页</a></li>-->
+<!--                            <li><a href="/noticePage">学习方法</a></li>-->
+<!--                            <li><a href="/articlePage">资料</a></li>-->
+<!--                            <li><a href="/onlineLearning">在线学习</a></li>-->
+<!--                            <li><a href="/forumPage">问答</a></li>-->
+<!--                            <li><a href="/leavePage">留言板</a></li>-->
+<!--                            <li><a href="/teacherPage">教师</a></li>-->
+<!--                            <li th:if="${is_loin}"><a>我的</a>-->
+<!--                                <ul class="rd-navbar-dropdown">-->
+<!--                                    <li><a href="/editUserInfo">个人信息</a></li>-->
+<!--                                    <li><a href="/editPas">修改密码</a></li>-->
+<!--                                    <li><a href="/myLeavePage">我的留言&回复</a></li>-->
+<!--                                    <li><a href="/myForumPage">我的问答</a></li>-->
+<!--                                    <li><a href="/sendForumPage">发布</a></li>-->
+<!--                                    <li><a href="/myCollect">我的收藏</a></li>-->
+<!--                                    <li><a href="/myCollectWord">我的词组</a></li>-->
+<!--                                </ul>-->
+<!--                            </li>-->
+                            <li th:if="${is_loin}"><a href="/logout.do">注销登录</a></li>
+                            <li th:if="${!is_loin}"><a href="/">登录/注册</a></li>
+                        </ul>
+                    </div>
+                    <!--搜索框-->
+                    <!--<div class="rd-navbar-search"><a class="rd-navbar-search-toggle"-->
+                    <!--data-rd-navbar-toggle=".rd-navbar-search"-->
+                    <!--href="#"><span></span></a>-->
+                    <!--<form class="rd-search" action="search-results.html"-->
+                    <!--data-search-live="rd-search-results-live" method="GET">-->
+                    <!--<div class="form-wrap">-->
+                    <!--<label class="form-label form-label"-->
+                    <!--for="rd-navbar-search-form-input">Search...</label>-->
+                    <!--<input class="rd-navbar-search-form-input form-input"-->
+                    <!--id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off">-->
+                    <!--<div class="rd-search-results-live" id="rd-search-results-live"></div>-->
+                    <!--</div>-->
+                    <!--<button class="rd-search-form-submit fa-search"></button>-->
+                    <!--</form>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+</body>
+</html>

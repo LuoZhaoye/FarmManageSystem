@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${wbeParameter.name}"></title>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="icon" href="/resource/img/favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="/resource/pages/waves/css/waves.min.css" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="/resource/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resource/pages/waves/css/waves.min.css" type="text/css" media="all">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/themify-icons/themify-icons.css">
+    <link rel="stylesheet" type="text/css" href="/resource/icon/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all"/>
+    <link rel="stylesheet" type="text/css" href="/resource/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/resource/css/my.css">
+</head>
+<body>
+
+<div class="pcoded-inner-content">
+    <div class="main-body" style="padding: 50px">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <div class="row">
+                    <!-- task, page, download counter  start -->
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-purple" th:text="${forumNum}"></h4>
+                                        <h6 class="text-muted m-b-0">问答</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-purple">
+                                <div class="row align-items-center"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-green" th:text="${noticeNum}">290+</h4>
+                                        <h6 class="text-muted m-b-0">学习方法</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-green">
+                                <div class="row align-items-center"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-red" th:text="${userNum}">145</h4>
+                                        <h6 class="text-muted m-b-0">用户数</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-red">
+                                <div class="row align-items-center"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col-8">
+                                        <h4 class="text-c-blue" th:text="${logNum}">500</h4>
+                                        <h6 class="text-muted m-b-0">网站访问量</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-c-blue">
+                                <div class="row align-items-center"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-md-12">
+                        <div class="card table-card">
+                            <div class="card-header">
+                                <h5>最新问答</h5>
+                            </div>
+                            <div class="card-block">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>发布用户</th>
+                                            <th>标题</th>
+                                            <th>发布时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="forum:${forumList}">
+                                            <td th:text="${forum.userName}">Able Pro</td>
+                                            <td th:text="${forum.title}">Jun, 26</td>
+                                            <td th:text="${#strings.substring(forum.time,0,19)}">Jun, 26</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Page-body end -->
+        </div>
+        <div id="styleSelector"></div>
+    </div>
+</div>
+</body>
+
+</html>

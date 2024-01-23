@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="/resource/common/layui/css/layui.css" media="all"/>
+</head>
+<body>
+<div class="layui-form" style="padding: 40px">
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品名称:</label>
+        <div class="layui-input-block">
+            <input type="text" name="workName" disabled th:value="${word.workName}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品类型:</label>
+        <div class="layui-input-block">
+            <input type="text" name="worksTypeId" disabled th:value="${word.worksTypeId}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品构思:</label>
+        <div class="layui-input-block">
+            <input type="text" name="idea" disabled th:value="${word.idea}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品类型:</label>
+        <div class="layui-input-block">
+            <input type="text" name="status" disabled th:value="${word.status}" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作品图片:</label>
+        <div class="layui-input-block">
+                    <img th:src="'/resource'+${word.image}" alt="" style="max-width: 196px">
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+</html>

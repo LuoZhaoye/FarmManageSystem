@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Site Title-->
+    <title th:text="${wbeParameter.name}"></title>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="utf-8">
+    <script src="/resource/js/3ts2ksMwXvKRuG480KNifJ2_JNM.js"></script>
+    <link rel="stylesheet" type="text/css" href="/resource/css/css.css">
+    <link rel="stylesheet" href="/resource/css/bootstrap.css">
+    <link rel="stylesheet" href="/resource/css/style(1).css">
+    <link rel="stylesheet" href="/resource/css/login.css">
+
+    <style>
+        .form-input{
+            text-align: center;
+            background-color: #BCBABA;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            font-size: 16px;
+            font-weight: 200;
+            padding: 10px 0;
+            /*width: 380px;*/
+            transition: border .5s;
+            font-family: "Space Grotesk", sans-serif;
+        }
+        .button{
+            border: 2px solid transparent;
+            background: black;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 25px;
+            padding: 10px 0;
+            text-decoration: none;
+            text-shadow: none;
+            border-radius: 3px;
+            box-shadow: none;
+            transition: 0.25s;
+            display: block;
+            width: 419px;
+            margin: 0 auto;
+            font-family: "Space Grotesk", sans-serif;
+        }
+    </style>
+
+</head>
+<body style="max-width: 1350px; height:90vh;margin: auto; background-color: #000000;">
+<!--e9e6e4-->
+
+<!-- Page-->
+<div class="text-left page">
+    <!-- Page Header-->
+    <header th:replace="proscenium/public :: head"></header>
+    <section class="section section-lg bg-white text-center" style=" width:1350px; height: 800px; margin-top: 100px;">
+        <div class="container" style="    background-color: #e9e6e4; max-width: 1350px; max-height: 800px;">
+            <div class="row justify-content-center tabs-custom-wrap text-center">
+                <div class="col-md-10 col-lg-8 col-xl-4">
+                    <div class="logo-l" style="margin: 0px 0 0 0px;">
+                        <img style="width: 150px; height: 150px;" src="/resource/image/breadcrumbs-bg.jpg" >
+                    </div>
+                    <!-- Bootstrap tabs-->
+                    <div class="tabs-custom tabs-horizontal" id="tabs-1">
+                        <!-- Nav tabs-->
+                        <ul class="nav-custom nav-custom-tabs nav-custom-tabs-inline nav">
+                            <li><a class="active" href="#tabs-1-1" data-toggle="tab">登录</a></li>
+                            <li><a href="#tabs-1-2" data-toggle="tab">注册</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-xl justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-4">
+                    <div class="tab-content text-left">
+                        <div class="tab-pane fade show active" id="tabs-1-1">
+                            <!-- RD Login Form-->
+                            <div class="rd-mailform text-left layui-form">
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">账户</label>-->
+                                    <input class="form-input" type="text" name="userName" lay-verify="required|userName" placeholder="请输入用户名" lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">密码</label>-->
+                                    <input class="form-input" type="password" name="password" lay-verify="required|pass" placeholder="请输入密码" lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <ul class="group-md group-middle">
+                                    <li>
+                                        <button class="button" type="submit" lay-submit="" lay-filter="demo1">
+                                            Log in
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tabs-1-2">
+                            <!-- RD Register Form-->
+                            <div class="rd-mailform text-left layui-form">
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">用户名</label>-->
+                                    <input class="form-input" type="text" name="userName" lay-verify="required|userName" placeholder="请输入用户名"
+                                           lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">联系方式</label>-->
+                                    <input class="form-input" type="text" name="phone_number" lay-verify="required|phone" placeholder="请输入联系方式"
+                                           lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">密码</label>-->
+                                    <input class="form-input" type="password" name="plainPassword"
+                                           lay-verify="required|pass" placeholder="请输入密码" lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <div class="form-wrap form-wrap-validation">
+                                    <!--                                    <label class="form-label form-label-outside">确认密码</label>-->
+                                    <input class="form-input" type="password" name="affirmPassword"
+                                           lay-verify="required|pass" placeholder="请确认密码" lay-vertype="tips" autocomplete="off">
+                                </div>
+                                <ul class="group-md group-middle">
+                                    <li>
+                                        <button class="button" type="submit" lay-submit="" lay-filter="demo2">
+                                            注册
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div class="snackbars" id="form-output-global"></div>
+</body>
+<script src="/resource/js/core.min.js"></script>
+<script src="/resource/js/script(1).js"></script>
+<script type="text/javascript" src="/resource/common/layui/layui.js"></script>
+<script>
+    layui.use(['carousel', 'form'], function () {
+        var carousel = layui.carousel
+            , form = layui.form,
+            $ = layui.$;
+        //自定义验证规则
+        form.verify({
+            userName: function (value) {
+                if (value.length < 5) {
+                    return '账号至少得5个字符';
+                }
+            },
+            phone: function (value) {
+                if (value.length < 8) {
+                    return '账号至少得8个字符';
+                }
+            },
+            pass: [/^[\S]{5,12}$/, '密码必须5到12位，且不能出现空格']
+        });
+        //监听提交
+        form.on('submit(demo1)', function (data) {
+            $.ajax({
+                url: '/loginPro.do',
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (result) {
+                    console.log(result)
+                    if (result.status) {
+                        let a = "";
+                        if( result.obje == true ){
+                            a = "?obj=true";
+                        }
+                        location.href = "/contestNotice" + a;
+                    } else {
+                        layer.msg(result.msg, {time: 3000});
+                    }
+                }
+            });
+        });
+        //监听提交
+        form.on('submit(demo2)', function (data) {
+            if (data.field.affirmPassword != data.field.plainPassword) {
+                layer.msg('两次密码输入不一致', {icon: 5});
+                return false;
+            }
+            data.field.status = "1"
+            $.ajax({
+                url: '/user/userRegister.do',
+                type: 'post',
+                dataType: 'json',
+                data: data.field,
+                async: false,
+                success: function (result) {
+                    console.log(result)
+                    if (result.status) {
+                        layer.alert("注册成功!", {
+                            time: 1000, end: function () {
+                                location.href = "/loginShiro";
+                            }
+                        });
+                    } else {
+                        layer.msg(result.msg, {time: 3000});
+                    }
+                }
+            });
+        });
+    });
+</script>
+</html>
